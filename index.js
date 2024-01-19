@@ -1,7 +1,8 @@
 const express = require("express");
 require("dotenv").config();
-const { client } = require("./src/config/database.js");
-const { generateFakeUser } = require("./scripts/fakeUserGenerator.js");
+const { client } = require("./src/config/database");
+const { errorHandler } = require("./src/middlewares/errorHandler");
+const userRoute = require("./src/routes/user");
 
 const app = express();
 const PORT = process.env.SERVER_PORT;
@@ -13,12 +14,15 @@ const startServer = async () => {
   try {
     await client.connect();
 
-    generateFakeUser(50);
+    app.use("/user", userRoute);
+
+    app.use(errorHandler);
 
     app.listen(PORT, () => {
       console.log(`server Started at PORT : ${PORT}`);
     });
   } catch (error) {
+    console.log(error);
     await client.end();
   }
 };
