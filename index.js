@@ -3,12 +3,14 @@ require("dotenv").config();
 const { client } = require("./src/config/database");
 const { errorHandler } = require("./src/middlewares/errorHandler");
 const userRoute = require("./src/routes/user");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.SERVER_PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 const startServer = async () => {
   try {
