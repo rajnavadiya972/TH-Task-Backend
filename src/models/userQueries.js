@@ -6,6 +6,4 @@ const getUserFromEmailQuery = "SELECT * FROM users WHERE email=$1";
 module.exports = {
   registerUserQuery,
   getUserFromEmailQuery,
-  addPostQuery,
-  addCommentQuery,
 };
