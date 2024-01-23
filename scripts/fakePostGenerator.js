@@ -1,6 +1,6 @@
 const { faker } = require("@faker-js/faker");
 const { client } = require("../src/config/database");
-const { addPostQuery } = require("../src/models/userQueries");
+const { addPostQuery } = require("../src/models/postCommentQueries");
 
 const generateFakePost = (length) => {
   const generateFakePostModel = () => ({
