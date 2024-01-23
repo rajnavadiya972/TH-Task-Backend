@@ -4,6 +4,7 @@ import cors from "cors";
 
 import client from "./src/config/database.js";
 import userRoute from "./src/routes/user.js";
+import postRoute from "./src/routes/post.js";
 
 const app = express();
 const PORT = process.env.SERVER_PORT;
@@ -17,6 +18,7 @@ const startServer = async () => {
     await client.connect();
 
     app.use("/user", userRoute);
+    app.use("/api", postRoute);
 
     app.listen(PORT, () => {
       console.log(`server Started at PORT : ${PORT}`);
