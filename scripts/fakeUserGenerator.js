@@ -1,6 +1,6 @@
 const { faker } = require("@faker-js/faker");
 const { client } = require("../src/config/database");
-const { registerUserQuery } = require("../src/models/userQueries");
+const { registerUserQuery } = require("../database/queries/userQueries");
 const bcrypt = require("bcrypt");
 
 const generateFakeUser = (length) => {
@@ -8,7 +8,8 @@ const generateFakeUser = (length) => {
     firstname: faker.person.firstName(),
     lastname: faker.person.lastName(),
     email: faker.internet.email(),
-    password: bcrypt.hashSync(faker.internet.password(), 10),
+    // password: bcrypt.hashSync(faker.internet.password(), 10),
+    password: bcrypt.hashSync("12345", 10),
   });
 
   const users = Array.from({ length: length }, generateFakeUserModel);

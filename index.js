@@ -1,7 +1,6 @@
 const express = require("express");
 require("dotenv").config();
 const { client } = require("./src/config/database");
-const { errorHandler } = require("./src/middlewares/errorHandler");
 const userRoute = require("./src/routes/user");
 const cors = require("cors");
 
@@ -18,13 +17,10 @@ const startServer = async () => {
 
     app.use("/user", userRoute);
 
-    app.use(errorHandler);
-
     app.listen(PORT, () => {
       console.log(`server Started at PORT : ${PORT}`);
     });
   } catch (error) {
-    console.log(error);
     await client.end();
   }
 };

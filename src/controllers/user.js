@@ -1,5 +1,8 @@
 const { client } = require("../config/database");
-const { registerUserQuery,getUserFromEmailQuery } = require("../models/userQueries");
+const {
+  registerUserQuery,
+  getUserFromEmailQuery,
+} = require("../../database/queries/userQueries");
 const { setUserToken } = require("../services/jwtUtils");
 const bcrypt = require("bcrypt");
 
@@ -8,7 +11,7 @@ const runQuery = async (query) => {
   return result;
 };
 
-const registerUser = async (req, res, next) => {
+const registerUser = async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
 
   const hashPassword = bcrypt.hashSync(password, 10);
@@ -22,11 +25,13 @@ const registerUser = async (req, res, next) => {
     const result = await runQuery(query);
     return res.status(201).json({ message: "User Created Successfully!" });
   } catch (error) {
-    next(error);
+    return res
+      .status(500)
+      .json({ error: "Internal server error!", errorMessage: error.message });
   }
 };
 
-const loginUser = async (req, res, next) => {
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   const query = {
@@ -61,7 +66,9 @@ const loginUser = async (req, res, next) => {
       token: token,
     });
   } catch (error) {
-    next(error);
+    return res
+      .status(500)
+      .json({ error: "Internal server error!", errorMessage: error.message });
   }
 };
 
