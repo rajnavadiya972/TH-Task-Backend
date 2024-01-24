@@ -64,6 +64,8 @@ const findPostWithCommnet = async (req, res, next) => {
 
     res.status(200).json({
       data: formattedData,
+      page: page,
+      pageSize: pageSize,
       totalPages: totalPages,
     });
   } catch (error) {
