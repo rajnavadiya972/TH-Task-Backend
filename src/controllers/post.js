@@ -2,28 +2,22 @@ const { client } = require("../config/database");
 const {
   findPostWithLimitAndOffset,
   findToatlPost,
-} = require("../models/postCommentQueries");
+  findUserPostWithLimitAndOffset,
+  findToatlUserPost,
+} = require("../../database/queries/postCommentQueries");
 
 const runQuery = async (query) => {
   const result = await client.query(query);
   return result;
 };
 
-const findPostWithCommnet = async (req, res, next) => {
-  const pageSize = req.query.pageSize || 10;
-  const page = req.query.page || 1;
-  const offset = (page - 1) * pageSize;
-
-  const query = {
-    text: findPostWithLimitAndOffset,
-    values: [pageSize, offset],
-  };
-
+const executeQueryLogic = async (props) => {
+  const { req, res, page, pageSize, countPostQuery, findPostQuery } = props;
   try {
-    const countPost = await runQuery(findToatlPost);
+    const countPost = await runQuery(countPostQuery);
     const totalPages = Math.ceil(countPost?.rows?.at(0)?.count / pageSize);
 
-    const result = await runQuery(query);
+    const result = await runQuery(findPostQuery);
     const formattedData = [];
     let currentPost = null;
 
@@ -62,17 +56,76 @@ const findPostWithCommnet = async (req, res, next) => {
       }
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       data: formattedData,
       page: page,
       pageSize: pageSize,
       totalPages: totalPages,
     });
   } catch (error) {
-    next(error);
+    return res
+      .status(500)
+      .json({ error: "Internal server error!", errorMessage: error.message });
   }
+};
+
+const findPostWithCommnet = async (req, res) => {
+  const pageSize = req.query.pageSize || 10;
+  const page = req.query.page || 1;
+  const offset = (page - 1) * pageSize;
+
+  const countPostQuery = findToatlPost;
+
+  const findPostQuery = {
+    text: findPostWithLimitAndOffset,
+    values: [pageSize, offset],
+  };
+
+  return await executeQueryLogic({
+    req,
+    res,
+    page,
+    pageSize,
+    countPostQuery,
+    findPostQuery,
+  });
+};
+
+const findUserPostWithCommnet = async (req, res) => {
+  const pageSize = req.query.pageSize || 10;
+  const page = req.query.page || 1;
+  const offset = (page - 1) * pageSize;
+  const user = req.user.id;
+
+  const countPostQuery = {
+    text: findToatlUserPost,
+    values: [user],
+  };
+
+  const findPostQuery = {
+    text: findUserPostWithLimitAndOffset,
+    values: [user, pageSize, offset],
+  };
+
+  return await executeQueryLogic({
+    req,
+    res,
+    page,
+    pageSize,
+    countPostQuery,
+    findPostQuery,
+  });
+};
+
+const findLoginUser = async (req, res) => {
+  return res.status(200).json({
+    userName: `${req.user.firstname} ${req.user.lastname}`,
+    userEmail: req.user.email,
+  });
 };
 
 module.exports = {
   findPostWithCommnet,
+  findLoginUser,
+  findUserPostWithCommnet,
 };
