@@ -1,10 +1,10 @@
-const { client } = require("../config/database");
-const {
+import client from "../config/database.js";
+import {
   registerUserQuery,
   getUserFromEmailQuery,
-} = require("../../database/queries/userQueries");
-const { setUserToken } = require("../services/jwtUtils");
-const bcrypt = require("bcrypt");
+} from "../../database/queries/userQueries.js";
+import { setUserToken } from "../services/jwtUtils.js";
+import bcrypt from "bcrypt";
 
 const runQuery = async (query) => {
   const result = await client.query(query);
@@ -72,7 +72,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = {
-  registerUser,
-  loginUser,
-};
+export { registerUser, loginUser };

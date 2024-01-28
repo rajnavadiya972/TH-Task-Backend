@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const { JWT_SECRET } = process.env;
 
@@ -17,6 +17,6 @@ const setUserToken = (user) => {
   return jwt.sign(payload, JWT_SECRET, signinOptions);
 };
 
-module.exports = {
+export {
   setUserToken,
 };

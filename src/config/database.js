@@ -1,4 +1,8 @@
-const { Client } = require("pg");
+import pg from "pg";
+import dotenv from "dotenv"
+
+const { Client } = pg;
+dotenv.config();
 
 const { USER, HOST, PASSWORD, PORT, DATABASE } = process.env;
 
@@ -11,7 +15,6 @@ const configuration = {
 };
 
 const client = new Client(configuration);
+// console.log(client);
 
-module.exports = {
-  client,
-};
+export default client;

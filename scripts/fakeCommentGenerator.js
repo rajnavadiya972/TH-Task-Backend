@@ -1,6 +1,6 @@
-const { faker } = require("@faker-js/faker");
-const { client } = require("../src/config/database");
-const { addCommentQuery } = require("../database/queries/postCommentQueries");
+import { faker } from "@faker-js/faker";
+import { client } from "../src/config/database";
+import { addCommentQuery } from "../database/queries/postCommentQueries";
 
 const generateFakeComment = (length) => {
   const generateFakeCommentModel = () => ({
@@ -25,6 +25,6 @@ const generateFakeComment = (length) => {
   });
 };
 
-module.exports = {
+export default {
   generateFakeComment,
 };

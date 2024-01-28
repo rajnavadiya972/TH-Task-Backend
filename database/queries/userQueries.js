@@ -3,7 +3,7 @@ const registerUserQuery =
 
 const getUserFromEmailQuery = "SELECT * FROM users WHERE email=$1";
 
-module.exports = {
+export {
   registerUserQuery,
   getUserFromEmailQuery,
 };

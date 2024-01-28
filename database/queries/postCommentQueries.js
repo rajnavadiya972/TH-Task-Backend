@@ -3,7 +3,7 @@ const addPostQuery =
 const addCommentQuery =
   "INSERT INTO comment_data (description, user_id, post_id) VALUES ($1, $2, $3)";
 
-module.exports = {
+export {
   addCommentQuery,
   addPostQuery,
 };

@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "TH-Task-Backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon --experimental-modules index.js"
   },
   "author": "",
   "license": "ISC",

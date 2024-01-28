@@ -1,14 +1,13 @@
-const { faker } = require("@faker-js/faker");
-const { client } = require("../src/config/database");
-const { registerUserQuery } = require("../database/queries/userQueries");
-const bcrypt = require("bcrypt");
+import { faker } from "@faker-js/faker";
+import { client } from "../src/config/database";
+import { registerUserQuery } from "../database/queries/userQueries";
+import bcrypt from "bcrypt";
 
 const generateFakeUser = (length) => {
   const generateFakeUserModel = () => ({
     firstname: faker.person.firstName(),
     lastname: faker.person.lastName(),
     email: faker.internet.email(),
-    // password: bcrypt.hashSync(faker.internet.password(), 10),
     password: bcrypt.hashSync("12345", 10),
   });
 
@@ -28,6 +27,6 @@ const generateFakeUser = (length) => {
   });
 };
 
-module.exports = {
+export default {
   generateFakeUser,
 };
