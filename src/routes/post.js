@@ -1,15 +1,12 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
 
-const {
-  findPostWithCommnet,
-  findLoginUser,
-  findUserPostWithCommnet,
-} = require("../controllers/post");
-const { authenticateToken } = require("../middlewares/authenticateToken");
+import { findPostWithCommnet, findLoginUser, findUserPostWithCommnet } from "../controllers/post.js";
+import { authenticateToken } from "../middlewares/authenticateToken.js";
+
+const router = express.Router();
 
 router.get("/post", authenticateToken, findPostWithCommnet);
 router.get("/user/post", authenticateToken, findUserPostWithCommnet);
 router.get("/user", authenticateToken, findLoginUser);
 
-module.exports = router;
+export default router;

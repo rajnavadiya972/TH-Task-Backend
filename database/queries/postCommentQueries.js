@@ -55,7 +55,7 @@ const findToatlPost = "SELECT COUNT(*) FROM post_data";
 
 const findToatlUserPost = "SELECT COUNT(*) FROM post_data where user_id=$1";
 
-module.exports = {
+export {
   addCommentQuery,
   addPostQuery,
   findPostWithLimitAndOffset,

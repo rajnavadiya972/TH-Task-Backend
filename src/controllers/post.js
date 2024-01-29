@@ -1,10 +1,6 @@
-const { client } = require("../config/database");
-const {
-  findPostWithLimitAndOffset,
-  findToatlPost,
-  findUserPostWithLimitAndOffset,
-  findToatlUserPost,
-} = require("../../database/queries/postCommentQueries");
+import client from "../config/database.js";
+import { findPostWithLimitAndOffset, findToatlPost, findUserPostWithLimitAndOffset, findToatlUserPost, } from "../../database/queries/postCommentQueries.js";
+import { findUserIdFromUuid } from "../../database/queries/userQueries.js";
 
 const runQuery = async (query) => {
   const result = await client.query(query);
@@ -95,16 +91,23 @@ const findUserPostWithCommnet = async (req, res) => {
   const pageSize = req.query.pageSize || 10;
   const page = req.query.page || 1;
   const offset = (page - 1) * pageSize;
-  const user = req.user.id;
+  const userUuid = req.user.id;
+
+  const query = {
+    text: findUserIdFromUuid,
+    values: [userUuid],
+  }
+  const user = await runQuery(query)
+  const userId = user?.rows?.at(0)?.id;
 
   const countPostQuery = {
     text: findToatlUserPost,
-    values: [user],
+    values: [userId],
   };
 
   const findPostQuery = {
     text: findUserPostWithLimitAndOffset,
-    values: [user, pageSize, offset],
+    values: [userId, pageSize, offset],
   };
 
   return await executeQueryLogic({
@@ -124,7 +127,7 @@ const findLoginUser = async (req, res) => {
   });
 };
 
-module.exports = {
+export {
   findPostWithCommnet,
   findLoginUser,
   findUserPostWithCommnet,
