@@ -1,11 +1,10 @@
 import express from "express";
-import dotenv from "dotenv";
+import { } from "dotenv/config";
 import cors from "cors";
 
 import client from "./src/config/database.js";
 import userRoute from "./src/routes/user.js";
 
-dotenv.config();
 const app = express();
 const PORT = process.env.SERVER_PORT;
 

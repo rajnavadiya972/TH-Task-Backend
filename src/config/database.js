@@ -1,8 +1,6 @@
 import pg from "pg";
-import dotenv from "dotenv"
 
 const { Client } = pg;
-dotenv.config();
 
 const { USER, HOST, PASSWORD, PORT, DATABASE } = process.env;
 
