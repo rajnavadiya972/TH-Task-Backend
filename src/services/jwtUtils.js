@@ -4,7 +4,7 @@ const { JWT_SECRET } = process.env;
 
 const setUserToken = (user) => {
   const payload = {
-    id: user.id,
+    id: user.user_id,
     firstname: user.firstname,
     lastname: user.lastname,
     email: user.email,

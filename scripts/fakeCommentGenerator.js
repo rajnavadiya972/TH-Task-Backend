@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { client } from "../src/config/database";
 import { addCommentQuery } from "../database/queries/postCommentQueries";
 

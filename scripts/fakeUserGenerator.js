@@ -1,7 +1,8 @@
 import { faker } from "@faker-js/faker";
+import bcrypt from "bcrypt";
+
 import { client } from "../src/config/database";
 import { registerUserQuery } from "../database/queries/userQueries";
-import bcrypt from "bcrypt";
 
 const generateFakeUser = (length) => {
   const generateFakeUserModel = () => ({

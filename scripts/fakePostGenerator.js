@@ -1,4 +1,5 @@
 const { faker } = require("@faker-js/faker");
+
 import { client } from "../src/config/database";
 import { addPostQuery } from "../database/queries/postCommentQueries";
 

@@ -1,10 +1,8 @@
-import client from "../config/database.js";
-import {
-  registerUserQuery,
-  getUserFromEmailQuery,
-} from "../../database/queries/userQueries.js";
-import { setUserToken } from "../services/jwtUtils.js";
 import bcrypt from "bcrypt";
+
+import client from "../config/database.js";
+import { registerUserQuery, getUserFromEmailQuery } from "../../database/queries/userQueries.js";
+import { setUserToken } from "../services/jwtUtils.js";
 
 const runQuery = async (query) => {
   const result = await client.query(query);
