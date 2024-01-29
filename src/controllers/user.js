@@ -57,8 +57,6 @@ const loginUser = async (req, res) => {
 
     const token = setUserToken(result?.rows?.at(0));
 
-    const { id, firstname, lastname, email } = result?.rows?.at(0);
-
     return res.status(200).json({
       message: "User LogIn Successfully!",
       token: token,
