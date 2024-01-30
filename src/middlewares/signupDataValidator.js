@@ -11,7 +11,7 @@ const signupValidationRules = [
 const validateData = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array().at(errors.array().length - 1).msg });
+        return res.status(400).json({ error: errors.array().at(errors.array().length - 1).msg });
     }
     next();
 }
