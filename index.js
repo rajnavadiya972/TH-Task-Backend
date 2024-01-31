@@ -20,9 +20,7 @@ const startServer = async () => {
     app.use("/user", userRoute);
     app.use("/api", postRoute);
 
-    app.listen(PORT, () => {
-      console.log(`server Started at PORT : ${PORT}`);
-    });
+    app.listen(PORT, () => { });
   } catch (error) {
     await client.end();
   }

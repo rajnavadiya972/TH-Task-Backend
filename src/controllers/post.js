@@ -52,20 +52,17 @@ const executeQueryLogic = async (props) => {
       }
     });
 
-    return res.status(200).json({
-      data: formattedData,
-      page: page,
-      pageSize: pageSize,
-      totalPages: totalPages,
-    });
+    return res
+      .status(200)
+      .json({ success: true, data: formattedData, page: page, pageSize: pageSize, totalPages: totalPages });
   } catch (error) {
     return res
       .status(500)
-      .json({ error: "Internal server error!", errorMessage: error.message });
+      .json({ success: false, error: "Internal server error!", errorMessage: error.message });
   }
 };
 
-const findPostWithCommnet = async (req, res) => {
+export const findPostWithCommnet = async (req, res) => {
   const pageSize = req.query.pageSize || 10;
   const page = req.query.page || 1;
   const offset = (page - 1) * pageSize;
@@ -77,17 +74,10 @@ const findPostWithCommnet = async (req, res) => {
     values: [pageSize, offset],
   };
 
-  return await executeQueryLogic({
-    req,
-    res,
-    page,
-    pageSize,
-    countPostQuery,
-    findPostQuery,
-  });
+  return await executeQueryLogic({ req, res, page, pageSize, countPostQuery, findPostQuery });
 };
 
-const findUserPostWithCommnet = async (req, res) => {
+export const findUserPostWithCommnet = async (req, res) => {
   const pageSize = req.query.pageSize || 10;
   const page = req.query.page || 1;
   const offset = (page - 1) * pageSize;
@@ -110,25 +100,11 @@ const findUserPostWithCommnet = async (req, res) => {
     values: [userId, pageSize, offset],
   };
 
-  return await executeQueryLogic({
-    req,
-    res,
-    page,
-    pageSize,
-    countPostQuery,
-    findPostQuery,
-  });
+  return await executeQueryLogic({ req, res, page, pageSize, countPostQuery, findPostQuery });
 };
 
-const findLoginUser = async (req, res) => {
-  return res.status(200).json({
-    userName: `${req.user.firstname} ${req.user.lastname}`,
-    userEmail: req.user.email,
-  });
-};
-
-export {
-  findPostWithCommnet,
-  findLoginUser,
-  findUserPostWithCommnet,
+export const findLoginUser = async (req, res) => {
+  return res
+    .status(200)
+    .json({ success: true, userName: `${req.user.firstname} ${req.user.lastname}`, userEmail: req.user.email });
 };
