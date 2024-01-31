@@ -1,20 +1,26 @@
-const express = require("express");
-require("dotenv").config();
-const { client } = require("./src/config/database.js");
+import express from "express";
+import "dotenv/config";
+import cors from "cors";
+
+import client from "./src/config/database.js";
+import userRoute from "./src/routes/user.js";
+import postRoute from "./src/routes/post.js";
 
 const app = express();
 const PORT = process.env.SERVER_PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 const startServer = async () => {
   try {
     await client.connect();
 
-    app.listen(PORT, () => {
-      console.log(`server Started at PORT : ${PORT}`);
-    });
+    app.use("/user", userRoute);
+    app.use("/api", postRoute);
+
+    app.listen(PORT, () => { });
   } catch (error) {
     await client.end();
   }

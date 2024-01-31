@@ -1,4 +1,5 @@
-const { Client } = require("pg");
+import pg from 'pg'
+const { Client } = pg;
 
 const { USER, HOST, PASSWORD, PORT, DATABASE } = process.env;
 
@@ -12,6 +13,4 @@ const configuration = {
 
 const client = new Client(configuration);
 
-module.exports = {
-  client,
-};
+export default client;
